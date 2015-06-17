@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>First App</title>
+	<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+	<script type="text/javascript" charset="utf-8">
+	document.addEventListener("deviceready", onDeviceReady, false);
+	function onDeviceReady(){
+		navigator.geolocation.getCurrentPosition(onSuccess,onError);
+	}
+	function onSuccess(position){
+		var geoElement=document.getElementById('geodata');
+		geoElement.innerHTML= 
+							'Latitude:' + position.coords.latitude + '<br />' + 
+							'Longitude:' + position.coords.longitude + '<br />' + 
+							'Accuracy:' + position.coords.accuracy + '<br />' + 
+							'Heading:' + position.coords.heading + '<br />' + 
+							'Speed:' + position.coords.speed + '<br />' + 
+							'TimeStamp:' + position.coords.timestamp + '<br />' ;
+	}
+	function onError(error){
+		var errString ='';
+		if(error.code){
+			switch(error.code){
+				case 1:
+					errorString= ' Can not fetch the location because of permission';
+					break;
+				case 2:
+					errorString= 'Location can notbe determied';
+					break;
+				case 3:
+					errorString= 'Timeout';
+					break;
+				default:	
+					errorString= 'Unknown erro';
+					break;
+			}		
+		}
+		var element=document.getElementById('geodata');
+		element.innerHTML=errString;
+	}
+	</script>
+	</head>
+
+	<body>
+	<h1>Geo Example</h1>
+		<div id="geodata">Waiting for GeoData....</div>
+	</body>
+</html>
